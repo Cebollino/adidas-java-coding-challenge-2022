@@ -1,7 +1,7 @@
 package com.adidas.backend.publicservice.service.publicservice.impl;
 
 import com.adidas.backend.publicservice.service.publicservice.PublicService;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,7 +14,13 @@ public class PublicServiceImpl implements PublicService {
 
     @Override
     public String callPrioritySaleService(String emailAddress) {
-        ResponseEntity<String> responseEntity = new RestTemplate().getForEntity(UriComponentsBuilder.fromHttpUrl(PRIORITY_SALE_SERVICE_URL).queryParam("emailAddress", emailAddress).encode().toUriString(), String.class);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        HttpEntity<String> request = new HttpEntity<>(emailAddress, headers);
+
+        ResponseEntity<String> responseEntity = new RestTemplate()
+                .exchange(UriComponentsBuilder.fromHttpUrl(PRIORITY_SALE_SERVICE_URL).build().encode().toUriString(), HttpMethod.PUT, request, String.class);
 
         return responseEntity.getBody();
     }
