@@ -1,19 +1,29 @@
 package com.adidas.backend.publicservice.controller;
 
+import com.adidas.backend.publicservice.service.publicservice.impl.PublicServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-public class PublucSaleServiceRestController {
+public class PublicSaleServiceRestController {
 
-  public static final String PRIORITY_SALE_SERVICE_URL = "http://adidas-be-challenge-prioritysaleservice/prioritySale";
+  private final PublicServiceImpl publicService;
+
+  public PublicSaleServiceRestController(PublicServiceImpl publicService) {
+    this.publicService = publicService;
+  }
 
   @GetMapping("/entrySale")
   public ResponseEntity<String> entrySale(@RequestParam(value = "emailAddress") final String emailAddress) {
-    ResponseEntity<String> responseEntity = new RestTemplate().getForEntity(UriComponentsBuilder.fromHttpUrl(PRIORITY_SALE_SERVICE_URL).queryParam("emailAddress", emailAddress).encode().toUriString(), String.class);
+    String serviceResponse = publicService.callPrioritySaleService(emailAddress);
 
-    return ResponseEntity.ok().body(responseEntity.getBody());
+    return "Couldn't add member to queue :(".equals(serviceResponse) ? ResponseEntity.internalServerError().body(serviceResponse) :ResponseEntity.ok().body(serviceResponse);
+  }
+
+  @GetMapping("/getWinner")
+  public ResponseEntity<String> getWinner() {
+    String serviceResponse = publicService.getWinner();
+
+    return "Couldn't get winner!".equals(serviceResponse) ? ResponseEntity.internalServerError().body(serviceResponse) : ResponseEntity.ok().body(serviceResponse);
   }
 }

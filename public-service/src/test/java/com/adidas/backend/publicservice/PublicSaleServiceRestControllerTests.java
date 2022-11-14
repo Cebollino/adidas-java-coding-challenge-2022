@@ -5,14 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import com.adidas.backend.publicservice.controller.PublucSaleServiceRestController;
+import com.adidas.backend.publicservice.controller.PublicSaleServiceRestController;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(value = PublucSaleServiceRestController.class)
-class PublucSaleServiceRestControllerTests {
+@WebMvcTest(value = PublicSaleServiceRestController.class)
+class PublicSaleServiceRestControllerTests {
 
 	@Autowired
-	private PublucSaleServiceRestController publucSaleServiceRestController;
+	private PublicSaleServiceRestController publicSaleServiceRestController;
 
 //	@Test
 //	void testDummyController() {

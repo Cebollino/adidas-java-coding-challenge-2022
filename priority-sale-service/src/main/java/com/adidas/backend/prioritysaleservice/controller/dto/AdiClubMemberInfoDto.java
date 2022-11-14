@@ -1,4 +1,4 @@
-package com.adidas.backend.prioritysaleservice.dto;
+package com.adidas.backend.prioritysaleservice.controller.dto;
 
 import lombok.Builder;
 import lombok.Data;

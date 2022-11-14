@@ -1,2 +1,5 @@
-package com.adidas.backend.emailservice.service;public class sendEmail {
+package com.adidas.backend.emailservice.service.sendEmail;
+
+public interface SendEmailService {
+    String sendEmail(String emailAddress);
 }
